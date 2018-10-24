@@ -1,0 +1,50 @@
+<body>
+  <div class='container'>
+    <div class='row'>
+      <div class='meme-card green-card green-card-judge col-sm-2 mx-auto'>
+        This is the prompt card.
+      </div>
+      <div class='meme-card col-sm-2 mx-auto' id='judge-selected-card'>
+        Selected card will appear here.
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='meme-card red-card red-card-judge col-sm-2 mx-auto' id='red-card1'>
+        <img id='player-selected-card1'>
+      </div>
+      <div class='meme-card red-card red-card-judge col-sm-2 mx-auto' id='red-card1'>
+        <img id='player-selected-card2'>
+      </div>
+      <div class='meme-card red-card red-card-judge col-sm-2 mx-auto' id='red-card1'>
+        <img id='player-selected-card3'>
+      </div>
+      <div class='meme-card red-card red-card-judge col-sm-2 mx-auto' id='red-card1'>
+        <img id='player-selected-card4'>
+      </div>
+      <div class='meme-card red-card red-card-judge col-sm-2 mx-auto' id='red-card1'>
+        <img id='player-selected-card5'>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script>
+  function getCards() {
+    $.ajax({ url: "api/selected-cards", method: "GET" })
+      .then(function(cardData) {
+          $('#player-selected-card1').attr('src', cardData[0].link);
+      });
+  };
+
+  getCards();
+
+  $('.red-card-judge').on('click', function(event) {
+    event.preventDefault();
+    $('#judge-selected-card').html($(this).contents());
+
+    $.ajax({ url: "api/player-score", method: "PUT" })
+  });
+</script>
