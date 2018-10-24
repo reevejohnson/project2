@@ -1,11 +1,17 @@
 module.exports = function(sequelize, DataTypes) {
-  var Meme = sequelize.define("User_memes", {
-    user_id:DataTypes.STRING,
-    meme: DataTypes.STRING
+  var Meme = sequelize.define("Meme", {
+    user_id: DataTypes.STRING,
+    link: DataTypes.STRING
   });
+
   Meme.associate = function(models) {
-    Meme.belongsTo(models.User)
+    Meme.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
   }; 
+  
   return Meme;
 };
   
