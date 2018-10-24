@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "RazorRazor9",
-    "database": "exampledb",
+    "database": "userDB",
     "host": "localhost",
     "dialect": "mysql"
   },
