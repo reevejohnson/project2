@@ -1,59 +1,38 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    <img src="https://www.segerios.com/wp-content/uploads/2016/09/Meme-game-too-strong-Bruh.jpg" width="30" height="30" alt="">
-  </a>
-  <a class="navbar-brand" href="#">Apples to Apples... but with Memes!</a>
-</nav>
-
-<div class="container">
-    <div class="row">
-      <div class="card col-sm" style="width: 18rem;">
-        <img class="card-img-top game-img" src="https://media.makeameme.org/created/lets-start-the-5b64e1.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Start New Game</h5>
-          <p class="card-text">Get dealt a new hand of memes with other online users!</p>
-          <a href="#" class="btn btn-primary">New Game</a>
-        </div>
+<body>
+  <div class='container'>
+      <div class='row'>
+          <div class='col-sm-12 mx-auto'>
+              Welcome to Apples to Apples!
+          </div>
       </div>
-    
-      <div class="card col-sm" style="width: 18rem;">
-        <img class="card-img-top game-img" src="https://i.pinimg.com/236x/10/62/8d/10628d3aca6e6f2368d489f81104360d--final-fantasy-x-kingdom-hearts.jpg" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Rejoin Game</h5>
-          <p class="card-text">Jump back into the game you've already started!</p>
-          <a href="#" class="btn btn-primary">Rejoin Game</a>
-        </div>
+
+      <div class='row'>
+          <div class='col-sm-2 mx-auto'>
+              <a href='/player'>Player Page</a>
+          </div>
+          <br>
+          <div class='col-sm-2 mx-auto'>
+              <a href='/judge'>Judge Page</a>
+          </div>
       </div>
-    </div>
-
-    <div class="row justify-content-center">
-
-        <div class="card col-sm-4" style="width: 18rem;">
-            <img class="card-img-top extras-img" src="https://i.imgflip.com/b6mz7.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Upload Your Memes</h5>
-              <p class="card-text">Start your own personal meme library!</p>
-              <a href="#" class="btn btn-primary">Upload Meme</a>
-            </div>
-        </div>
-
-        <div class="card col-sm-4" style="width: 18rem;">
-            <img class="card-img-top extras-img" src="https://i.imgur.com/9KifeoC.png" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Statistics</h5>
-              <p class="card-text">Your wins: <br>Your losses: </p>
-            </div>
-        </div>
-        
-    </div>
-</div>
-
-<footer class="page-footer font-small blue">
-
-  <div class="footer-copyright text-center py-3">© 2018 Copyright | Apples to Apples... but with Memes!
   </div>
-  
-</footer>
+</body>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
+<script>
+  function createPlayer() {
+    $.post('/api/player-score',
+      function(data) {
+        if(data) {
+          console.log('Welcome to Apples to Apples')
+        } else {
+          alert('Something went awry.')
+        }
+      })
+  };
+  
+  $(document).ready(function() {
+    createPlayer();
+  });
+</script>
