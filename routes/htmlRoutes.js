@@ -20,6 +20,18 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/index', function(req, res) {
+    res.render('index');
+  })
+  
+  app.get('/player', function(req, res) {
+    res.render('player');
+  });
+
+  app.get('/judge', function(req, res) {
+    res.render('judge');
+  });
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
