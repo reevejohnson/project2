@@ -1,12 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User_info", {
+  var User = sequelize.define("User", {
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    score: DataTypes.INT 
+    score: DataTypes.INTEGER
   });
   User.associate = function(models) {
-    User.hasMany(models.User_memes, {
+    User.hasMany(models.User, {
       onDelete: "cascade"
     });
   };

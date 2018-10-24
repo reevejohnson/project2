@@ -3,12 +3,7 @@ var db = require("../models");
 module.exports = function(app) {
   // Load login page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("home", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
+    res.render('home');
   });
 
   // Load example page and pass in an example by id
