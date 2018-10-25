@@ -15,6 +15,13 @@ module.exports = function(app) {
     });
   });
 
+  //Get all prompt cards
+  app.get("/api/prompt-cards", function(req, res) {
+    db.promptCards.findAll({}).then(function(dbCards) {
+      res.json(dbCards);
+    });
+  });
+
   //Post to selected cards database
   app.post("/api/selected-cards", function(req, res) {
     db.SelectedCards.create(req.body).then(function(dbCard) {

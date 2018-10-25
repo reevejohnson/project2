@@ -1,3 +1,15 @@
+function pullPrompt() {
+  $.get('/api/prompt-cards', function(data) {
+    var selectedCard = getRandom(data, 1);
+    $('.green-card-player').html(selectedCard[0].text);
+    $('.green-card-judge').html(selectedCard[0].text);
+  })
+};
+
+$(document).ready(function() {
+  pullPrompt();
+});
+
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
