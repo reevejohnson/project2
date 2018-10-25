@@ -10,20 +10,20 @@
     </div>
 
     <div class='row'>
-      <div class='meme-card red-card red-card-player col-sm-2 mx-auto' id='red-card1'>
-        <img style='max-width: 150px; max-height: 250px' src='https://pbs.twimg.com/media/DXbemHyVMAAb3v0.jpg'>
+      <div class='meme-card red-card red-card-player col-sm-2 mx-auto'>
+        <img style='max-width: 150px; max-height: 250px' id='red-card0'>
       </div>
-      <div class='meme-card red-card red-card-player col-sm-2 mx-auto' id='red-card2'>
-        <img style='max-width: 150px; max-height: 250px' src='https://pbs.twimg.com/media/Dbu2bInVwAABRto.jpg'>
+      <div class='meme-card red-card red-card-player col-sm-2 mx-auto'>
+        <img style='max-width: 150px; max-height: 250px' id='red-card1'>
       </div>
-      <div class='meme-card red-card red-card-player col-sm-2 mx-auto' id='red-card3'>
-        <img style='max-width: 150px; max-height: 250px' src='https://pbs.twimg.com/media/Dgod7B4UYAEB0U6.jpg'>
+      <div class='meme-card red-card red-card-player col-sm-2 mx-auto'>
+        <img style='max-width: 150px; max-height: 250px' id='red-card2'>
       </div>
-      <div class='meme-card red-card red-card-player col-sm-2 mx-auto' id='red-card4'>
-        <img style='max-width: 150px; max-height: 250px' src='https://pbs.twimg.com/media/DluiUn0X0AQqQkY.jpg'>
+      <div class='meme-card red-card red-card-player col-sm-2 mx-auto'>
+        <img style='max-width: 150px; max-height: 250px' id='red-card3'>
       </div>
-      <div class='meme-card red-card red-card-player col-sm-2 mx-auto' id='red-card5'>
-        <img style='max-width: 150px; max-height: 250px' src='https://pbs.twimg.com/media/DgqwSzhXUAEyShm.jpg'>
+      <div class='meme-card red-card red-card-player col-sm-2 mx-auto'>
+        <img style='max-width: 150px; max-height: 250px' id='red-card4'>
       </div>
     </div>
 
@@ -45,14 +45,36 @@
 <script src="/js/index.js"></script>
 <script>
   function pullScore() {
-    $.ajax({ url: '/api/player-score', method: 'GET'})
-      .then(function(scoreData) {
-        $('#player-points').html(scoreData[0].score);
-      })
+    $.get('api/user_info', function(data) {
+      $('#player-points').html(data.score);
+    });
+  };
+
+  function pullMemes() {
+    $.get('/api/all-memes', function(data) {
+      var selectedMemes = getRandom(data, 5);
+      for(i=0; i < selectedMemes.length; i++) {
+        $(`#red-card${i}`).attr('src', selectedMemes[i].link)
+      }
+    })
+  }
+
+  function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
   };
 
   $(document).ready(function() {
-    pullScore();
+    pullMemes();
   });
 
   $('.red-card-player').on('click', function(event) {
@@ -69,7 +91,8 @@
         } else {
           alert('Pick a different card.');
         }
-      })
+      }
+    );
 
     $('#selected-card').html($(this).contents());
   });

@@ -1,38 +1,31 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all selected cards
-  app.get("/api/selected-cards", function(req, res) {
-    db.SelectedCard.findAll({}).then(function(dbCards) {
-      res.json(dbCards);
+  //Get all meme cards
+  app.get("/api/all-memes", function(req, res) {
+    db.all_memes.findAll({}).then(function(dbMemes) {
+      res.json(dbMemes);
     });
   });
 
-  // Get all player scores
-  app.get('/api/player-score', function(req, res) {
-    db.PlayerScore.findAll({}).then(function(dbScores) {
-      res.json(dbScores);
-    })
-  })
+  //Post a new meme
+  app.post("/api/all-memes", function(req, res) {
+    db.all_memes.create(req.body).then(function(dbMeme) {
+      res.json(dbMeme);
+    });
+  });
 
-  //Get one player score by id
-  app.get('/api/player-score/:id', function(req, res) {
-    db.PlayerScore.findOne({ where: {id: req.params.id}}).then(dbScore => {
-      res.json(dbScore);
-    })
-  })
-
-  // Create a new selected card
+  //Post to selected cards database
   app.post("/api/selected-cards", function(req, res) {
-    db.SelectedCard.create(req.body).then(function(dbCard) {
+    db.SelectedCards.create(req.body).then(function(dbCard) {
       res.json(dbCard);
     });
   });
 
-  //Create a new player score
-  app.post("/api/player-score", function(req, res) {
-    db.PlayerScore.create({}).then(function(dbScore) {
-      res.json(dbScore);
+  //Get all selected cards
+  app.get("/api/selected-cards", function(req, res) {
+    db.SelectedCards.findAll({}).then(function(dbCards) {
+      res.json(dbCards);
     });
   });
 
