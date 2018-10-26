@@ -1,8 +1,7 @@
-var db = require("../models");
 
 module.exports = function(app) {
   // Load login page
-  app.get("/", function(req, res) {
+  app.get('/', function(req, res) {
     res.render('index');
   });
 
@@ -26,7 +25,7 @@ module.exports = function(app) {
     res.render('judge');
   });
   
-  app.get("*", function(req, res) {
-    res.render("404");
+  app.get('*', function(req, res) {
+    res.render('404');
   });
 };
