@@ -25,20 +25,20 @@ module.exports = function(app) {
   //Get one random prompt card
   app.get('/api/prompt-cards/random', function(req, res) {
     db.promptCards.findOne({order: [db.Sequelize.fn( 'RAND' )]})
-    .then((dbCard) => {
-      res.json(dbCard);
-    });
-  })
+      .then((dbCard) => {
+        res.json(dbCard);
+      });
+  });
 
   //Post selected prompt card to database
-  app.post("/api/selected-prompt-card", function(req, res) {
+  app.post('/api/selected-prompt-card', function(req, res) {
     db.SelectedPrompt.create(req.body).then(function(dbPrompt) {
       res.json(dbPrompt);
     });
   });
 
   //Get selected prompt card from database
-  app.get("/api/selected-prompt-card", function(req, res) {
+  app.get('/api/selected-prompt-card', function(req, res) {
     db.SelectedPrompt.findAll({}).then(function(dbPrompt) {
       res.json(dbPrompt);
     });
@@ -52,14 +52,14 @@ module.exports = function(app) {
   });
 
   //Post selected judge card to database
-  app.post("/api/selected-judge-card", function(req, res) {
+  app.post('/api/selected-judge-card', function(req, res) {
     db.JudgeSelection.create(req.body).then(function(dbSelection) {
       res.json(dbSelection);
     });
   });
 
   //Get selected judge card from database
-  app.get("/api/selected-judge-card", function(req, res) {
+  app.get('/api/selected-judge-card', function(req, res) {
     db.JudgeSelection.findAll({}).then(function(dbSelection) {
       res.json(dbSelection);
     });
