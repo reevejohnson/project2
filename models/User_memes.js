@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-  var Meme = sequelize.define("Meme", {
-    user_id: DataTypes.STRING,
+  var Meme = sequelize.define('Meme', {
+    userId: DataTypes.STRING,
     link: DataTypes.STRING
   });
 
@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: {
         allowNull: false
       }
-    })
+    });
   }; 
   
   return Meme;
