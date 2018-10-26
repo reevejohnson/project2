@@ -51,6 +51,27 @@ module.exports = function(app) {
     });
   });
 
+  //Post selected judge card to database
+  app.post("/api/selected-judge-card", function(req, res) {
+    db.JudgeSelection.create(req.body).then(function(dbSelection) {
+      res.json(dbSelection);
+    });
+  });
+
+  //Get selected judge card from database
+  app.get("/api/selected-judge-card", function(req, res) {
+    db.JudgeSelection.findAll({}).then(function(dbSelection) {
+      res.json(dbSelection);
+    });
+  });
+
+  // Delete a selected judge card from database
+  app.delete('/api/selected-judge-card/:id', function(req, res) {
+    db.JudgeSelection.destroy({ where: { id: req.params.id } }).then(function(dbSelection) {
+      res.json(dbSelection);
+    });
+  });
+
   //Post to selected cards database
   app.post('/api/selected-cards', function(req, res) {
     db.SelectedCards.create(req.body).then(function(dbCard) {
@@ -61,6 +82,13 @@ module.exports = function(app) {
   //Get all selected cards
   app.get('/api/selected-cards', function(req, res) {
     db.SelectedCards.findAll({}).then(function(dbCards) {
+      res.json(dbCards);
+    });
+  });
+
+  // Delete all selected cards
+  app.delete('/api/selected-cards', function(req, res) {
+    db.SelectedCards.destroy({ where: {} }).then(function(dbCards) {
       res.json(dbCards);
     });
   });
