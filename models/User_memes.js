@@ -1,6 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   var Meme = sequelize.define('Meme', {
-    userId: DataTypes.STRING,
     link: DataTypes.STRING
   });
 

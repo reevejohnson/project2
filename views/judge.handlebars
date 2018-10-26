@@ -38,14 +38,26 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script>
-  function getPrompt() {
-    $.get('api/selected-prompt-card', function(promptData) {
-      console.log(promptData);
-      $('.green-card-judge').html(promptData[0].text);
-    })
+  function pullPrompt() {
+    $.get('/api/prompt-cards/random', function(data) {
+      var selectedPrompt = data.text;
+      $('.green-card-judge').html(selectedPrompt);
+    }).then(function() {
+      var promptText = {text: $('.green-card-judge').html().toString()}
+      $.post('/api/selected-prompt-card', promptText, function(datas) {
+        if(datas) {
+          alert('Welcome to Apples to Apples!');
+        } else {
+          alert('Something went awry');
+        }
+      });
+    }
+    );
   };
 
-  setInterval(()=> { this.getPrompt() }, 5000);
+  $(document).ready(function() {
+    pullPrompt();
+  });
 
   function getCards() {
     $.get('api/selected-cards', function(cardData) {
@@ -57,10 +69,24 @@
 
   setInterval(()=> { this.getCards() }, 5000);
 
+  var promptId = 1;
+
   $('.red-card-judge').on('click', function(event) {
     event.preventDefault();
     $('#judge-selected-card').html($(this).contents());
 
-    $.ajax({ url: "api/player-score", method: "PUT" })
+    $.ajax({
+      url: `/api/selected-prompt-card/${promptId++}`,
+      type: 'DELETE',
+      success: function(data) {
+        if(data) {
+          console.log('Yay.');
+        } else {
+          console.log('Wtf.');
+        }
+      }
+    });
+    
+    pullPrompt();
   });
 </script>

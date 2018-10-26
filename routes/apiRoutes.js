@@ -3,14 +3,14 @@ var db = require('../models');
 module.exports = function(app) {
   //Get all meme cards
   app.get('/api/all-memes', function(req, res) {
-    db.all_memes.findAll({}).then(function(dbMemes) {
+    db.allMemes.findAll({}).then(function(dbMemes) {
       res.json(dbMemes);
     });
   });
 
   //Post a new meme
   app.post('/api/all-memes', function(req, res) {
-    db.all_memes.create(req.body).then(function(dbMeme) {
+    db.allMemes.create(req.body).then(function(dbMeme) {
       res.json(dbMeme);
     });
   });
@@ -44,6 +44,13 @@ module.exports = function(app) {
     });
   });
 
+  // Delete a selected prompt from database
+  app.delete('/api/selected-prompt-card/:id', function(req, res) {
+    db.SelectedPrompt.destroy({ where: { id: req.params.id } }).then(function(dbPrompt) {
+      res.json(dbPrompt);
+    });
+  });
+
   //Post to selected cards database
   app.post('/api/selected-cards', function(req, res) {
     db.SelectedCards.create(req.body).then(function(dbCard) {
@@ -55,13 +62,6 @@ module.exports = function(app) {
   app.get('/api/selected-cards', function(req, res) {
     db.SelectedCards.findAll({}).then(function(dbCards) {
       res.json(dbCards);
-    });
-  });
-
-  // Delete an example by id
-  app.delete('/api/examples/:id', function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
     });
   });
 };
