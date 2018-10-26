@@ -3,6 +3,9 @@
     <div class='row'>
       <div class='meme-card green-card green-card-player col-sm-2 mx-auto'>
       </div>
+      <div class='meme-card red-card judge-selected-red-card col-sm-2 mx-auto'>
+        Winning card will appear here.
+      </div>
       <div class='meme-card col-sm-2 mx-auto' id='selected-card'>
         Selected card will appear here.
       </div>
@@ -26,11 +29,11 @@
       </div>
     </div>
 
-    <div class='row'>
+    {{!-- <div class='row'>
       <div class='points-div col-sm-4 mx-auto'>
         You currently have <span id='player-points'></span> points.
       </div>
-    </div>
+    </div> --}}
 
     <div class='row'>
       <div class='col-sm-4 mx-auto'>
@@ -58,12 +61,31 @@
     })
   };
 
+  function pullOneMeme(id, div) {
+    $.get('/api/all-memes', function(data) {
+      var selectedMeme = getRandom(data, 1);
+      var img = $(`<img style='max-width: 150px; max-height: 250px' id='${id}'>`);
+      img.attr('src', selectedMeme[0].link);
+      img.appendTo($(div));
+    })
+  }
+
   function getPrompt() {
     $.get('api/selected-prompt-card', function(promptData) {
-      console.log(promptData);
       $('.green-card-player').html(promptData[0].text);
     })
   };
+
+  function getJudgeSelection() {
+    $.get('/api/selected-judge-card', function(cardData) {
+      $('.judge-selected-red-card').html('');
+      var img = $(`<img style='max-width: 150px; max-height: 250px'>`);
+      img.attr('src', cardData[0].link);
+      img.appendTo($('.judge-selected-red-card'));
+    })
+  }
+
+  setInterval(() => { this.getJudgeSelection() }, 5000);
 
   setInterval(()=> { this.getPrompt() }, 5000);
 
@@ -102,6 +124,8 @@
       }
     );
 
+    var imgId = $(this).find('img').prop('id');
     $('#selected-card').html($(this).contents());
+    pullOneMeme(imgId, $(this));
   });
 </script>

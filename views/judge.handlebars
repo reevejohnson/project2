@@ -50,6 +50,10 @@
         } else {
           alert('Something went awry');
         }
+      }).then(function() {
+        for(i = 0; i < 5; i++) {
+          $(`#player-selected-card${i}`).attr('src', '');
+        }
       });
     }
     );
@@ -69,11 +73,55 @@
 
   setInterval(()=> { this.getCards() }, 5000);
 
+  var judgeId = 0;
   var promptId = 1;
 
   $('.red-card-judge').on('click', function(event) {
     event.preventDefault();
+
+    $.ajax({
+      url: '/api/selected-cards',
+      type: 'DELETE',
+      success: function(data) {
+        if(data) {
+          console.log('Yay.');
+        } else {
+          console.log('Wtf.');
+        }
+      }
+    });
+
+    $.ajax({
+      url: `/api/selected-judge-card/${judgeId++}`,
+      type: 'DELETE',
+      success: function(data) {
+        if(data) {
+          console.log('Yay.');
+        } else {
+          console.log('Wtf.');
+        }
+      }
+    });
+
+    var imgId = $(this).find('img').prop('id');
+
     $('#judge-selected-card').html($(this).contents());
+    $('#judge-selected-card').find('img').attr('id', 'judge-card');
+
+    var newImg = $(`<img style='max-width: 150px; max-height: 250px' id='${imgId}'>`);
+    newImg.appendTo($(this));
+
+    var judgeSelection = {
+      link: $('#judge-selected-card').find('img').prop('src')
+    };
+
+    $.post('/api/selected-judge-card', judgeSelection, function(data) {
+      if(data) {
+        console.log('Yay!')
+      } else {
+        console.log('Wtf.');
+      }
+    });
 
     $.ajax({
       url: `/api/selected-prompt-card/${promptId++}`,
@@ -88,5 +136,7 @@
     });
     
     pullPrompt();
+
+    event.end();
   });
 </script>
