@@ -58,33 +58,14 @@
     })
   };
 
-  function pullPrompt() {
-    $.get('/api/prompt-cards/random', function(data) {
-      var selectedPrompt = data.text;
-      $('.green-card-player').html(selectedPrompt);
-    }).then(function() {
-      var promptText = {text: $('.green-card-player').html().toString()}
-      $.post('/api/selected-prompt-card', promptText, function(datas) {
-        if(datas) {
-          alert('Welcome to Apples to Apples!');
-        } else {
-          alert('Something went awry');
-        }
-      });
-    }
-    );
+  function getPrompt() {
+    $.get('api/selected-prompt-card', function(promptData) {
+      console.log(promptData);
+      $('.green-card-player').html(promptData[0].text);
+    })
   };
 
-  {{!-- function pushPrompt() {
-    var selectedPrompt = { text: $('.green-card-player').html().toString() };
-    $.post('/api/selected-prompt-card', selectedPrompt, function(data) {
-      if(data) {
-        alert('Welcome to Apples to Apples!');
-      } else {
-        alert('Something went awry');
-      }
-    });
-  }; --}}
+  setInterval(()=> { this.getPrompt() }, 5000);
 
   function getRandom(arr, n) {
     var result = new Array(n),
@@ -102,7 +83,6 @@
 
   $(document).ready(function() {
     pullMemes();
-    pullPrompt();
   });
 
   $('.red-card-player').on('click', function(event) {
