@@ -38,6 +38,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script>
+  function getPrompt() {
+    $.get('api/selected-prompt-card', function(promptData) {
+      console.log(promptData);
+      $('.green-card-judge').html(promptData[0].text);
+    })
+  };
+
+  setInterval(()=> { this.getPrompt() }, 5000);
+
   function getCards() {
     $.get('api/selected-cards', function(cardData) {
       for(i=0; i < cardData.length; i++) {

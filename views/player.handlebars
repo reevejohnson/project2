@@ -2,7 +2,6 @@
   <div class='container'>
     <div class='row'>
       <div class='meme-card green-card green-card-player col-sm-2 mx-auto'>
-        This is the prompt card.
       </div>
       <div class='meme-card col-sm-2 mx-auto' id='selected-card'>
         Selected card will appear here.
@@ -59,6 +58,34 @@
     })
   };
 
+  function pullPrompt() {
+    $.get('/api/prompt-cards/random', function(data) {
+      var selectedPrompt = data.text;
+      $('.green-card-player').html(selectedPrompt);
+    }).then(function() {
+      var promptText = {text: $('.green-card-player').html().toString()}
+      $.post('/api/selected-prompt-card', promptText, function(datas) {
+        if(datas) {
+          alert('Welcome to Apples to Apples!');
+        } else {
+          alert('Something went awry');
+        }
+      });
+    }
+    );
+  };
+
+  {{!-- function pushPrompt() {
+    var selectedPrompt = { text: $('.green-card-player').html().toString() };
+    $.post('/api/selected-prompt-card', selectedPrompt, function(data) {
+      if(data) {
+        alert('Welcome to Apples to Apples!');
+      } else {
+        alert('Something went awry');
+      }
+    });
+  }; --}}
+
   function getRandom(arr, n) {
     var result = new Array(n),
         len = arr.length,
@@ -75,6 +102,7 @@
 
   $(document).ready(function() {
     pullMemes();
+    pullPrompt();
   });
 
   $('.red-card-player').on('click', function(event) {
