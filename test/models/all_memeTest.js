@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 const allMemes = require('../../models/allMemes');
 
 describe('allMemes', function() {
-  it('allMemes should return all memes linked', function() {
+  it('allMemes should return all meme links', function() {
     assert.equal(allMemes(), allMemes);
   });
 });
