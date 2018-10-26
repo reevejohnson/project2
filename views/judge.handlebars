@@ -2,10 +2,18 @@
   <div class='container'>
     <div class='row'>
       <div class='meme-card green-card green-card-judge col-sm-2 mx-auto'>
-        This is the prompt card.
       </div>
       <div class='meme-card col-sm-2 mx-auto' id='judge-selected-card'>
         Selected card will appear here.
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-sm-2 mx-auto'>
+        ^Prompt Card^
+      </div>
+      <div class='col-sm-2 mx-auto'>
+        ^Your Selected Card^
       </div>
     </div>
 
@@ -46,9 +54,9 @@
       var promptText = {text: $('.green-card-judge').html().toString()}
       $.post('/api/selected-prompt-card', promptText, function(datas) {
         if(datas) {
-          alert('Welcome to Apples to Apples!');
+          console.log('Welcome to Apples to Apples!');
         } else {
-          alert('Something went awry');
+          console.log('Something went awry');
         }
       }).then(function() {
         for(i = 0; i < 5; i++) {
