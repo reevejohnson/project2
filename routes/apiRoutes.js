@@ -22,6 +22,28 @@ module.exports = function(app) {
     });
   });
 
+  //Get one random prompt card
+  app.get('/api/prompt-cards/random', function(req, res) {
+    db.promptCards.findOne({order: [db.Sequelize.fn( 'RAND' )]})
+    .then((dbCard) => {
+      res.json(dbCard);
+    });
+  })
+
+  //Post selected prompt card to database
+  app.post("/api/selected-prompt-card", function(req, res) {
+    db.SelectedPrompt.create(req.body).then(function(dbPrompt) {
+      res.json(dbPrompt);
+    });
+  });
+
+  //Get selected prompt card from database
+  app.get("/api/selected-prompt-card", function(req, res) {
+    db.SelectedPrompt.findAll({}).then(function(dbPrompt) {
+      res.json(dbPrompt);
+    });
+  });
+
   //Post to selected cards database
   app.post("/api/selected-cards", function(req, res) {
     db.SelectedCards.create(req.body).then(function(dbCard) {
