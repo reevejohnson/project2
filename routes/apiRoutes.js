@@ -14,7 +14,12 @@ module.exports = function(app) {
       res.json(dbMeme);
     });
   });
-
+  //Post a new user
+  app.post('/api/user', function(req, res) {
+    db.user.create(req.body).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
   //Get all prompt cards
   app.get('/api/prompt-cards', function(req, res) {
     db.promptCards.findAll({}).then(function(dbCards) {

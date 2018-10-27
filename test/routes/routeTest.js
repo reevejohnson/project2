@@ -149,9 +149,3 @@ describe('DELETE /api/examples', function() {
       });
   });
 });
-//POST a new user
-//GET new user and validate data
-// PUT updated user new data
-// GET user and validate new data
-// //DELETE user
-// GET user and validate it doesn’t exist
